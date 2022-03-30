@@ -25,10 +25,10 @@ int openInputStream(char *filename) {
   inputStream = fopen(filename, "rt");
 
   if (inputStream == NULL){
-    printf("Khong thay");
+    printf("File not found.\n");
     return IO_ERROR;
   }
-  else printf("Da mo xong");
+  else printf("Opened %s\n", filename);
 
   lineNo = 1;
   colNo = 0;
