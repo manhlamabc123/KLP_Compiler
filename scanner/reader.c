@@ -21,11 +21,14 @@ int readChar(void) {
   return currentChar;
 }
 
-openInputStream() {
-  inputStream = fopen("c:\example1.kpl", "rt");
-    if (inputStream == NULL)
-    {printf("Khong thay");return IO_ERROR;}
-    else printf("Da mo xong");
+int openInputStream(char *filename) {
+  inputStream = fopen(filename, "rt");
+
+  if (inputStream == NULL){
+    printf("Khong thay");
+    return IO_ERROR;
+  }
+  else printf("Da mo xong");
 
   lineNo = 1;
   colNo = 0;
