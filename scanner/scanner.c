@@ -11,6 +11,7 @@
 #include "charcode.h"
 #include "token.h"
 #include "error.h"
+#include <string.h>
 
 
 extern int lineNo;
@@ -373,18 +374,37 @@ int scan(char *fileName) {
 
 /******************************************************************/
 
-int main(int argc, char *argv[]) {
-  //Check for file input in cmd
-  if (argc <= 1) {
-    printf("scanner: no input file.\n");
-    return -1;
-  }
+int main()
+{
+  int menu = 0;
+  char string[10];
 
-  //Read file
-  if (scan(argv[1]) == IO_ERROR) {
-    printf("Can\'t read input file!\n");
-    return -1;
-  }
+  do {
+    printf("-----MENU-----\n");
+    printf("1. Example 1.\n");
+    printf("2. Example 2.\n");
+    printf("3. Example 3.\n");
+    printf("4. Exit.\n");
+    printf("Check for: "); scanf("%d", &menu);
 
-  return 0;
+    switch (menu)
+    {
+    case 1:
+      strcpy(string, "example1.kpl");
+      break;
+    case 2:
+      strcpy(string, "example2.kpl");
+      break;
+    case 3:
+      strcpy(string, "example3.kpl");
+      break;
+    case 4:
+      return 0;
+    }
+
+    if (scan(string) == IO_ERROR) {
+      printf("Can\'t read input file!\n");
+    }
+    printf("\n");
+  } while (menu != 4);
 }
