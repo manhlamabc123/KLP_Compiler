@@ -145,11 +145,13 @@ int scan(char *fileName) {
 /******************************************************************/
 
 int main(int argc, char *argv[]) {
+  //Check for file input in cmd
   if (argc <= 1) {
     printf("scanner: no input file.\n");
     return -1;
   }
 
+  //Read file
   if (scan(argv[1]) == IO_ERROR) {
     printf("Can\'t read input file!\n");
     return -1;
