@@ -125,11 +125,13 @@ void printToken(Token *token) {
 }
 
 int scan(char *fileName) {
-  Token *token;
+  Token *token; //Initialize token pointer
 
+  //Check if Input file is exist
   if (openInputStream(fileName) == IO_ERROR)
     return IO_ERROR;
 
+  //If Input file is existed, read file
   token = getToken();
   while (token->tokenType != TK_EOF) {
     printToken(token);
@@ -137,6 +139,7 @@ int scan(char *fileName) {
     token = getToken();
   }
 
+  //Done read file, free token and close file
   free(token);
   closeInputStream();
   return IO_SUCCESS;
