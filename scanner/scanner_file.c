@@ -32,11 +32,11 @@ void skipComment() {
   while (1) {
     readChar();
     if (currentChar == -1) {
-      error(ERR_ENDOFCOMMENT, lineNo, colNo);
+      error(ERR_ENDOFCOMMENT, lineNo, colNo, file);
     } else if (charCodes[currentChar] == CHAR_TIMES) {
       readChar();
       if (currentChar == -1) {
-        error(ERR_ENDOFCOMMENT, lineNo, colNo);
+        error(ERR_ENDOFCOMMENT, lineNo, colNo, file);
       } else if (charCodes[currentChar] == CHAR_RPAR) {
         readChar();
         return;
@@ -57,7 +57,7 @@ Token* readIdentKeyword(void) {
   token->string[count] = '\0';
 
   if (count > MAX_IDENT_LEN) {
-    error(ERR_IDENTTOOLONG, lineNo, colNo - count);
+    error(ERR_IDENTTOOLONG, lineNo, colNo - count, file);
   } else {
     TokenType type = checkKeyword(token->string);
     if (type != TK_NONE) {
@@ -73,7 +73,7 @@ Token* readNumber(void) {
 
   while (charCodes[currentChar] == CHAR_DIGIT) {
 	if (count > 9) {
-		error(ERR_NUMBERTOOLONG, token->lineNo, token->colNo);
+		error(ERR_NUMBERTOOLONG, token->lineNo, token->colNo, file);
 	}
     token->string[count] = currentChar;
     count++;
@@ -90,7 +90,7 @@ Token* readConstChar(void) {
 
   readChar();
   if (currentChar == -1) {
-    error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo);
+    error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
   } else {
     switch(charCodes[currentChar]) {
     case CHAR_SINGLEQUOTE:
@@ -103,10 +103,10 @@ Token* readConstChar(void) {
               readChar();
               return token;
           } else {
-              error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo);
+              error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
           }
       } else {
-        error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo);
+        error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
       }
       break;
     default:
@@ -118,7 +118,7 @@ Token* readConstChar(void) {
         readChar();
         return token;
       default:
-        error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo);
+        error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
         break;
       }
       break;
@@ -214,7 +214,7 @@ Token* getToken(void) {
     token = makeToken(TK_NONE, lineNo, colNo);
     readChar();
     if (charCodes[currentChar] != CHAR_EQ) {
-      error(ERR_INVALIDSYMBOL, token->lineNo, token->colNo);
+      error(ERR_INVALIDSYMBOL, token->lineNo, token->colNo, file);
     } else {
       token->tokenType = SB_NEQ;
     }
@@ -239,7 +239,7 @@ Token* getToken(void) {
     return readConstChar();
   default:
     token = makeToken(TK_NONE, lineNo, colNo);
-    error(ERR_INVALIDSYMBOL, lineNo, colNo);
+    error(ERR_INVALIDSYMBOL, lineNo, colNo, file);
     readChar(); 
     return token;
   }

@@ -22,6 +22,6 @@ typedef enum {
 #define ERM_INVALIDSYMBOL "Invalid symbol!"
 #define ERM_NUMBERTOOLONG "Number too long!"
 
-void error(ErrorCode err, int lineNo, int colNo);
+void error(ErrorCode err, int lineNo, int colNo, FILE* file);
 
 #endif
