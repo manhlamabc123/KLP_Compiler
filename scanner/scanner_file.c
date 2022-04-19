@@ -19,6 +19,7 @@ extern int colNo;
 extern int currentChar;
 
 extern CharCode charCodes[];
+FILE* file;
 
 /***************************************************************/
 
@@ -302,7 +303,6 @@ void printToken(Token *token, FILE* file) {
 
 int scan(char *fileName) {
   Token *token;
-  FILE* file = fopen("result.txt", "w+");
 
   if (openInputStream(fileName) == IO_ERROR)
     return IO_ERROR;
@@ -315,7 +315,6 @@ int scan(char *fileName) {
   }
 
   free(token);
-  fclose(file);
   closeInputStream();
   return IO_SUCCESS;
 }
@@ -326,9 +325,11 @@ int main()
 {
   int menu = 0;
   char string[10];
+  file = fopen("result.txt", "w+");
 
   if (scan("example2.kpl") == IO_ERROR) {
     printf("Can\'t read input file!\n");
   }
   printf("\n");
+  fclose(file);
 }
