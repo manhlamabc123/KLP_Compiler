@@ -92,25 +92,7 @@ Token* readConstChar(void) {
   if (currentChar == -1) {
     error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
   } else {
-    switch(charCodes[currentChar]) {
-    case CHAR_SINGLEQUOTE:
-      readChar();
-      if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
-          token->string[0] = currentChar;
-          readChar();
-          if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
-              token->string[1] = '\0';
-              readChar();
-              return token;
-          } else {
-              error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
-          }
-      } else {
-        error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
-      }
-      break;
-    default:
-      token->string[0] = currentChar;
+    token->string[0] = currentChar;
       readChar();
       switch(charCodes[currentChar]) {
       case CHAR_SINGLEQUOTE:
@@ -121,8 +103,6 @@ Token* readConstChar(void) {
         error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
         break;
       }
-      break;
-    }
   }
   return token;
 }
@@ -327,7 +307,7 @@ int main()
   char string[10];
   file = fopen("result.txt", "w+");
 
-  if (scan("example2.kpl") == IO_ERROR) {
+  if (scan("example3.kpl") == IO_ERROR) {
     printf("Can\'t read input file!\n");
   }
   printf("\n");
