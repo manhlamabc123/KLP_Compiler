@@ -22,6 +22,9 @@ void error(ErrorCode err, int lineNo, int colNo, FILE* file) {
   case ERR_INVALIDSYMBOL:
     fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_INVALIDSYMBOL);
     break;
+  case ERR_NUMBERTOOLONG:
+    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLONG);
+    break;
   }
   exit(-1);
 }
