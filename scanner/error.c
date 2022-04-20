@@ -25,6 +25,9 @@ void error(ErrorCode err, int lineNo, int colNo, FILE* file) {
   case ERR_NUMBERTOOLONG:
     fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLONG);
     break;
+  case ERR_NUMBERTOOBIG:
+    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOBIG);
+    break;
   }
   exit(-1);
 }
