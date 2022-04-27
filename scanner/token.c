@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "token.h"
+#include <string.h>
 
 struct {
   char string[MAX_IDENT_LEN + 1];
@@ -34,18 +35,10 @@ struct {
   {"TO", KW_TO}
 };
 
-int keywordEq(char *kw, char *string) {
-  while ((*kw != '\0') && (*string != '\0')) {
-    if (*kw != toupper(*string)) break;
-    kw ++; string ++;
-  }
-  return ((*kw == '\0') && (*string == '\0'));
-}
-
 TokenType checkKeyword(char *string) {
   int i;
   for (i = 0; i < KEYWORDS_COUNT; i++)
-    if (keywordEq(keywords[i].string, string)) 
+    if (strcmp(keywords[i].string, string) == 0) 
       return keywords[i].tokenType;
   return TK_NONE;
 }
