@@ -50,7 +50,7 @@ Token* readIdentKeyword(void) {
   int count = 0;
   Token* token = makeToken(TK_IDENT, lineNo, colNo);
 
-  while (charCodes[currentChar] == CHAR_LETTER || charCodes[currentChar] == CHAR_DIGIT) {
+  while (charCodes[currentChar] == CHAR_LETTER || charCodes[currentChar] == CHAR_DIGIT || charCodes[currentChar] == CHAR_UNDERSCORE) {
     token->string[count] = currentChar;
     count++;
     readChar();
@@ -121,6 +121,7 @@ Token* getToken(void) {
   switch (charCodes[currentChar]) {
   case CHAR_SPACE: skipBlank(); return getToken();
   case CHAR_LETTER: return readIdentKeyword();
+  case CHAR_UNDERSCORE: return readIdentKeyword();
   case CHAR_DIGIT: return readNumber();
   case CHAR_PLUS: 
     token = makeToken(SB_PLUS, lineNo, colNo);
