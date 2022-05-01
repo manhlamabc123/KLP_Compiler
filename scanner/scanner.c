@@ -162,24 +162,9 @@ Token* getToken(void) {
     readChar();
     return token;
   case CHAR_LPAR:
-    token = makeToken(TK_NONE, lineNo, colNo);
+    token = makeToken(SB_LPAR, lineNo, colNo);
     readChar();
-    switch(charCodes[currentChar]) {
-    case CHAR_PERIOD:
-      token->tokenType = SB_LSEL;
-      readChar();
-      return token;
-    case CHAR_TIMES:
-      free(token);
-      skipComment();
-      return getToken();
-    case CHAR_SPACE:
-      readChar();
-      return getToken();
-    default:
-      token->tokenType = SB_LPAR;
-      return token;
-    }
+    return token;
   case CHAR_GT:
     token = makeToken(SB_GT, lineNo, colNo);
     readChar();
