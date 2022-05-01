@@ -52,7 +52,7 @@ Token* readIdentKeyword(void) {
   }
   token->string[count] = '\0';
 
-  if (count > MAX_IDENT_LEN) {
+  if (count > 15) {
     error(ERR_IDENTTOOLONG, lineNo, colNo - count, file);
   } else {
     TokenType type = checkKeyword(token->string);
