@@ -41,12 +41,11 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    
     CHAR_SPACE,
     CHAR_EXCLAIMATION,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    CHAR_UNKNOWN,
+    CHAR_DOLAR,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_SINGLEQUOTE,
@@ -74,7 +73,6 @@ CharCode charCodes[256] = {
     CHAR_EQ,
     CHAR_GT,
     CHAR_UNKNOWN,
-    
     CHAR_UNKNOWN,
     CHAR_LETTER,
     CHAR_LETTER,
@@ -107,7 +105,6 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNDERSCORE,
-    
     CHAR_UNKNOWN,
     CHAR_LETTER,
     CHAR_LETTER,
@@ -140,7 +137,6 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
@@ -173,7 +169,6 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
@@ -206,7 +201,6 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
@@ -239,7 +233,6 @@ CharCode charCodes[256] = {
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
-    
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,
     CHAR_UNKNOWN,

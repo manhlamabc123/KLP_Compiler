@@ -27,7 +27,8 @@ typedef enum {
   CHAR_LPAR,
   CHAR_RPAR,
   CHAR_UNKNOWN,
-  CHAR_UNDERSCORE
+  CHAR_UNDERSCORE,
+  CHAR_DOLAR
 } CharCode;
 
 #endif
