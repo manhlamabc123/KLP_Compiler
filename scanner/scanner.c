@@ -182,6 +182,10 @@ Token* getToken(void) {
       token->tokenType = SB_LE;
       readChar();
       return token;
+    case CHAR_GT:
+      token->tokenType = SB_NEQ;
+      readChar();
+      return token;
     default:
       token->tokenType = SB_LT;
       return token;
