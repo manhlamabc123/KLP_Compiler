@@ -1,4 +1,4 @@
-progRam EXAMPLE3;  (* TOWER OF HANOI *)
+progRam EXAMPLE3;  // TOWER OF HANOI
 VAR  INT2EG$Er:INTEGER;  
      N:INTEGER;  
      P:INTEGER;  

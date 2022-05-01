@@ -34,14 +34,9 @@ void skipComment() {
     readChar();
     if (currentChar == -1) {
       error(ERR_ENDOFCOMMENT, lineNo, colNo, file);
-    } else if (charCodes[currentChar] == CHAR_TIMES) {
+    } else if (currentChar == 10) {
       readChar();
-      if (currentChar == -1) {
-        error(ERR_ENDOFCOMMENT, lineNo, colNo, file);
-      } else if (charCodes[currentChar] == CHAR_RPAR) {
-        readChar();
-        return;
-      }
+      return;
     }
   }
 }
@@ -136,9 +131,20 @@ Token* getToken(void) {
     readChar();
     return token;
   case CHAR_SLASH:
-    token = makeToken(SB_SLASH, lineNo, colNo);
+    // token = makeToken(SB_SLASH, lineNo, colNo);
+    // readChar();
+    // return token;
+    token = makeToken(TK_NONE, lineNo, colNo);
     readChar();
-    return token;
+    switch(charCodes[currentChar]) {
+    case CHAR_SLASH:
+      free(token);
+      skipComment();
+      return getToken();
+    default:
+      token->tokenType = SB_SLASH;
+      return token;
+    }
   case CHAR_EQ:
     token = makeToken(SB_EQ, lineNo, colNo);
     readChar();
