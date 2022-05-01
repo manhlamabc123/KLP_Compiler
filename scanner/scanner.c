@@ -85,23 +85,44 @@ Token* readNumber(void) {
 }
 
 Token* readConstChar(void) {
-  Token* token = makeToken(TK_CHAR, lineNo, colNo);
-
+  int count = 0;
+  Token* token = makeToken(TK_NONE, lineNo, colNo);
   readChar();
-  if (currentChar == -1) {
-    error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
-  } else {
-    token->string[0] = currentChar;
+
+  while (charCodes[currentChar] != CHAR_UNKNOWN || charCodes[currentChar] != CHAR_RPAR) {
+    if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
       readChar();
-      switch(charCodes[currentChar]) {
+      switch (charCodes[currentChar])
+      {
       case CHAR_SINGLEQUOTE:
-        token->string[1] = '\0';
+        token->string[count] = currentChar;
+        count++;
         readChar();
-        return token;
+        break;
+      case CHAR_RPAR:
+        goto goal;
+        break;
       default:
         error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo, file);
         break;
       }
+    } else {
+      token->string[count] = currentChar;
+      count++;
+      readChar();
+    }
+  }
+  goal: token->string[count] = '\0';
+
+  if (count > 255) {
+    error(ERR_INVALIDCHARCONSTANT, lineNo, colNo - count, file);
+  } else {
+    if (count == 1) token->tokenType = TK_CHAR;
+    else token->tokenType = TK_CONST_CHAR;
+    TokenType type = checkKeyword(token->string);
+    if (type != TK_NONE) {
+      token->tokenType = type;
+    }
   }
   return token;
 }
@@ -236,6 +257,7 @@ void printToken(Token *token, FILE* file) {
   case TK_IDENT: fprintf(file, "TK_IDENT(%s)\n", token->string); break;
   case TK_NUMBER: fprintf(file, "TK_NUMBER(%s)\n", token->string); break;
   case TK_CHAR: fprintf(file, "TK_CHAR(\'%s\')\n", token->string); break;
+  case TK_CONST_CHAR: fprintf(file, "TK_CONST_CHAR(\'%s\')\n", token->string); break;
   case TK_EOF: fprintf(file, "TK_EOF\n"); break;
 
   case KW_PROGRAM: fprintf(file, "KW_PROGRAM\n"); break;
