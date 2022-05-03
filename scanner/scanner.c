@@ -89,7 +89,7 @@ Token* readConstChar(void) {
   Token* token = makeToken(TK_NONE, lineNo, colNo);
   readChar();
 
-  while (charCodes[currentChar] != CHAR_UNKNOWN || charCodes[currentChar] != CHAR_RPAR) {
+  while (charCodes[currentChar] != CHAR_UNKNOWN || charCodes[currentChar] != CHAR_RPAR || count < 255) {
     if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
       readChar();
       switch (charCodes[currentChar])
