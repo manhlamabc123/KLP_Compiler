@@ -324,55 +324,11 @@ int scan(char *fileName) {
 /******************************************************************/
 
 int main()
-{
-  int menu = 0;
-  char string[10];
-
-  do {
-    printf("-----MENU-----\n");
-    printf("1. Example 3.\n");
-    printf("2. End of comment expected!.\n");
-    printf("3. Identification too long!.\n");
-    printf("4. Number too long!.\n");
-    printf("5. Number too big!.\n");
-    printf("6. Invalid const char!.\n");
-    printf("7. Exit.\n");
-    printf("Check for: "); scanf("%d", &menu);
-
-    switch (menu)
-    {
-    case 1:
-      file = fopen("result.txt", "w+");
-      strcpy(string, "example3.kpl");
-      break;
-    case 2:
-      file = fopen("result_error1.txt", "w+");
-      strcpy(string, "error1.kpl");
-      break;
-    case 3:
-      file = fopen("result_error2.txt", "w+");
-      strcpy(string, "error2.kpl");
-      break;
-    case 4:
-      file = fopen("result_error3.txt", "w+");
-      strcpy(string, "error3.kpl");
-      break;
-    case 5:
-      file = fopen("result_error4.txt", "w+");
-      strcpy(string, "error4.kpl");
-      break;
-    case 6:
-      file = fopen("result_error5.txt", "w+");
-      strcpy(string, "error5.kpl");
-      break;
-    case 7:
-      return 0;
-    }
-    
-    if (scan(string) == IO_ERROR) {
-      printf("Can\'t read input file!\n");
-    }
-    fclose(file);
-    printf("\n");
-  } while (menu != 4);
+{   
+  file = fopen("result.txt", "w+");
+  if (scan("example3.kpl") == IO_ERROR) {
+    printf("Can\'t read input file!\n");
+  }
+  fclose(file);
+  printf("\n");
 }
