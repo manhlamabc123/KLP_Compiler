@@ -302,33 +302,3 @@ void printToken(Token *token, FILE* file) {
   case SB_RSEL: fprintf(file, "SB_RSEL\n"); break;
   }
 }
-
-int scan(char *fileName) {
-  Token *token;
-
-  if (openInputStream(fileName) == IO_ERROR)
-    return IO_ERROR;
-
-  token = getToken();
-  while (token->tokenType != TK_EOF) {
-    printToken(token, file);
-    free(token);
-    token = getToken();
-  }
-
-  free(token);
-  closeInputStream();
-  return IO_SUCCESS;
-}
-
-/******************************************************************/
-
-int main()
-{   
-  file = fopen("result.txt", "w+");
-  if (scan("example3.kpl") == IO_ERROR) {
-    printf("Can\'t read input file!\n");
-  }
-  fclose(file);
-  printf("\n");
-}
