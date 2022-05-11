@@ -21,15 +21,10 @@ int readChar(void) {
   return currentChar;
 }
 
-int openInputStream(char *filename) {
-  inputStream = fopen(filename, "rt");
-
-  if (inputStream == NULL){
-    printf("File not found.\n");
+int openInputStream(char *fileName) {
+  inputStream = fopen(fileName, "rt");
+  if (inputStream == NULL)
     return IO_ERROR;
-  }
-  else printf("Opened %s\n", filename);
-
   lineNo = 1;
   colNo = 0;
   readChar();
@@ -39,3 +34,4 @@ int openInputStream(char *filename) {
 void closeInputStream() {
   fclose(inputStream);
 }
+

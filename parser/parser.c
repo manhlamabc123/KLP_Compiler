@@ -545,6 +545,7 @@ void compileExpression2(void) {
   compileExpression3();
 }
 
+
 void compileExpression3(void) {
   switch(lookAhead->tokenType) {
   case SB_PLUS:
@@ -688,4 +689,5 @@ int compile(char *fileName) {
   free(lookAhead);
   closeInputStream();
   return IO_SUCCESS;
+
 }
