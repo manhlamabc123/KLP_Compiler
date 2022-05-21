@@ -70,6 +70,7 @@ void compileBlock3(void) {
   else compileBlock4();
 }
 
+//	<Block4> ∷= <SubDecls><Block5>|<Block5> ?
 void compileBlock4(void) {
   compileSubDecls();
   compileBlock5();
@@ -81,9 +82,11 @@ void compileBlock5(void) {
   eat(KW_END);
 }
 
+//	<ConstDecls> ∷= <ConstDecl> <ConstDecls>
+//	<ConstDecls> ∷=  e
 void compileConstDecls(void) {
   assert("Parsing subconstants...");
-  while (lookAhead->tokenType == TK_IDENT)
+  while (lookAhead->tokenType == TK_IDENT) //?
       compileConstDecl();
   assert("Subconstants parsed!");
 }
@@ -97,6 +100,8 @@ void compileConstDecl(void) {
   assert("Constant parsed!");
 }
 
+//	<TypeDecls> ∷= <TypeDecl> <TypeDecls>
+//	<TypeDecls> ∷= e
 void compileTypeDecls(void) {
   assert("Parsing subtypes...");
   while (lookAhead->tokenType == TK_IDENT)
@@ -114,19 +119,19 @@ void compileTypeDecl(void) {
 }
 
 void compileVarDecls(void) {
-//  assert("Parsing variables...");
+  assert("Parsing variables...");
   while(lookAhead->tokenType == TK_IDENT)
       compileVarDecl();
-//  assert("Variables parsed");
+  assert("Variables parsed");
 }
 
 void compileVarDecl(void) {
-//  assert("Parsing a variable...");
+  assert("Parsing a variable...");
   eat(TK_IDENT);
   eat(SB_COLON);
   compileType();
   eat(SB_SEMICOLON);
-//  assert("Variable parsed!");
+  assert("Variable parsed!");
 }
 
 void compileSubDecls(void) {
@@ -163,6 +168,96 @@ void compileProcDecl(void) {
   compileBlock();
   eat(SB_SEMICOLON);
   assert("Procedure parsed ....");
+}
+
+void compileParams(void) {
+  switch (lookAhead->tokenType) {
+  case SB_LPAR:
+      eat(SB_LPAR);
+      compileParam();
+      compileParams2();
+      eat(SB_RPAR);
+      break;
+  case SB_COLON:
+  case SB_SEMICOLON:
+      break;
+  default:
+      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
+}
+
+void compileParams2(void) {
+  switch (lookAhead->tokenType) {
+  case SB_SEMICOLON:
+      eat(SB_SEMICOLON);
+      compileParam();
+      compileParams2();
+      break;
+  case SB_RPAR:
+      break;
+  default:
+      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
+}
+
+void compileParam(void) {
+  switch (lookAhead->tokenType) {
+  case TK_IDENT:
+      eat(TK_IDENT);
+      eat(SB_COLON);
+      compileBasicType();
+      break;
+  case KW_VAR:
+      eat(KW_VAR);
+      eat(TK_IDENT);
+      eat(SB_COLON);
+      compileBasicType();
+      break;
+  default:
+      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
+}
+
+void compileType(void) {
+  switch (lookAhead->tokenType) {
+  case KW_INTEGER:
+      eat(KW_INTEGER);
+      break;
+  case KW_CHAR:
+      eat(KW_CHAR);
+      break;
+  case TK_IDENT:
+      eat(TK_IDENT);
+      break;
+  case KW_ARRAY:
+      eat(KW_ARRAY);
+      eat(SB_LSEL);
+      eat(TK_NUMBER);
+      eat(SB_RSEL);
+      eat(KW_OF);
+      compileType();
+      break;
+  default:
+      error(ERR_INVALIDTYPE, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
+}
+
+void compileBasicType(void) {
+  switch (lookAhead->tokenType) {
+  case KW_INTEGER:
+      eat(KW_INTEGER);
+      break;
+  case KW_CHAR:
+      eat(KW_CHAR);
+      break;
+  default:
+      error(ERR_INVALIDBASICTYPE, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
 }
 
 void compileUnsignedConstant(void) {
@@ -213,96 +308,6 @@ void compileConstant2(void) {
       break;
   default:
       error(ERR_INVALIDCONSTANT, lookAhead->lineNo, lookAhead->colNo);
-      break;
-  }
-}
-
-void compileType(void) {
-  switch (lookAhead->tokenType) {
-  case KW_INTEGER:
-      eat(KW_INTEGER);
-      break;
-  case KW_CHAR:
-      eat(KW_CHAR);
-      break;
-  case TK_IDENT:
-      eat(TK_IDENT);
-      break;
-  case KW_ARRAY:
-      eat(KW_ARRAY);
-      eat(SB_LSEL);
-      eat(TK_NUMBER);
-      eat(SB_RSEL);
-      eat(KW_OF);
-      compileType();
-      break;
-  default:
-      error(ERR_INVALIDTYPE, lookAhead->lineNo, lookAhead->colNo);
-      break;
-  }
-}
-
-void compileBasicType(void) {
-  switch (lookAhead->tokenType) {
-  case KW_INTEGER:
-      eat(KW_INTEGER);
-      break;
-  case KW_CHAR:
-      eat(KW_CHAR);
-      break;
-  default:
-      error(ERR_INVALIDBASICTYPE, lookAhead->lineNo, lookAhead->colNo);
-      break;
-  }
-}
-
-void compileParams(void) {
-  switch (lookAhead->tokenType) {
-  case SB_LPAR:
-      eat(SB_LPAR);
-      compileParam();
-      compileParams2();
-      eat(SB_RPAR);
-      break;
-  case SB_COLON:
-  case SB_SEMICOLON:
-      break;
-  default:
-      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
-      break;
-  }
-}
-
-void compileParams2(void) {
-  switch (lookAhead->tokenType) {
-  case SB_SEMICOLON:
-      eat(SB_SEMICOLON);
-      compileParam();
-      compileParams2();
-      break;
-  case SB_RPAR:
-      break;
-  default:
-      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
-      break;
-  }
-}
-
-void compileParam(void) {
-  switch (lookAhead->tokenType) {
-  case TK_IDENT:
-      eat(TK_IDENT);
-      eat(SB_COLON);
-      compileBasicType();
-      break;
-  case KW_VAR:
-      eat(KW_VAR);
-      eat(TK_IDENT);
-      eat(SB_COLON);
-      compileBasicType();
-      break;
-  default:
-      error(ERR_INVALIDPARAM, lookAhead->lineNo, lookAhead->colNo);
       break;
   }
 }
@@ -689,5 +694,4 @@ int compile(char *fileName) {
   free(lookAhead);
   closeInputStream();
   return IO_SUCCESS;
-
 }
