@@ -488,14 +488,16 @@ void compileArguments1(void) {
 void compileArguments2(void) {
   switch (lookAhead->tokenType) {
   case SB_COMMA:
-      eat(SB_COMMA);
-      compileExpression();
-      compileArguments2();
-      break;
+    eat(SB_COMMA);
+    compileExpression();
+    compileArguments2();
+    break;
+  case SB_RPAR:
+    break;
   // Error:
   default:
-      error(ERR_INVALIDARGUMENTS, lookAhead->lineNo, lookAhead->colNo);
-      break;
+    error(ERR_INVALIDARGUMENTS, lookAhead->lineNo, lookAhead->colNo);
+    break;
   }
 }
 
