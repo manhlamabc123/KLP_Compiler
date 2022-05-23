@@ -435,8 +435,7 @@ void compileArguments(void) {
   switch (lookAhead->tokenType) {
   case SB_LPAR:
       eat(SB_LPAR);
-      compileExpression();
-      compileArguments2();
+      compileArguments1();
       eat(SB_RPAR);
       break;
   // Follow - same as call statement as statement:
@@ -473,15 +472,25 @@ void compileArguments(void) {
   }
 }
 
+void compileArguments1(void) {
+  switch (lookAhead->tokenType)
+  {
+  //Follow
+  case SB_RPAR:
+    break;
+  default:
+    compileExpression();
+    compileArguments2();
+    break;
+  }
+}
+
 void compileArguments2(void) {
   switch (lookAhead->tokenType) {
   case SB_COMMA:
       eat(SB_COMMA);
       compileExpression();
       compileArguments2();
-      break;
-  // Follow
-  case SB_RPAR:
       break;
   // Error:
   default:
