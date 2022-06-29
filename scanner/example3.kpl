@@ -1,5 +1,5 @@
 progRam EXAMPLE3;  // TOWER OF HANOI
-VAR  INT2EG$Er:INTEGER;  
+VAR  INT2EG$Er:integer;  
      Integer:INTEGER;  
      P:INTEGER;  
      Q:INTEGER;

@@ -564,7 +564,8 @@ void compileExpression2(void) {
 
 void compileExpression3(void) {
   switch(lookAhead->tokenType) {
-  case SB_PLUS:
+  //First: +, -, eps
+  case SB_PLUS: 
       eat(SB_PLUS);
       compileTerm();
       compileExpression3();
