@@ -12,8 +12,6 @@
 extern SymTab* symtab;
 extern Token* currentToken;
 
-static int on_search = 0;
-
 Object* lookupObject(char *name) {
   Scope *scope = symtab->currentScope;
   Object *obj;
@@ -38,34 +36,20 @@ void checkFreshIdent(char *name) {
 
 
 Object* checkDeclaredIdent(char* name) {
-    // Start search
-    on_search = 0;
-
     Object *obj = lookupObject(name);
-
-    // Reset search
-    on_search = 0;
-
     if (obj == NULL)
         error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
-
     return obj;
 }
 
 Object* checkDeclaredConstant(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && obj->kind == OBJ_CONSTANT)
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
 
     if (obj == NULL)
         error(ERR_UNDECLARED_CONSTANT, currentToken->lineNo, currentToken->colNo);
@@ -76,18 +60,12 @@ Object* checkDeclaredConstant(char* name) {
 Object* checkDeclaredType(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && obj->kind == OBJ_TYPE)
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
-
+    
     if (obj == NULL)
         error(ERR_UNDECLARED_TYPE, currentToken->lineNo, currentToken->colNo);
 
@@ -97,17 +75,11 @@ Object* checkDeclaredType(char* name) {
 Object* checkDeclaredVariable(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && obj->kind == OBJ_VARIABLE)
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
 
     if (obj == NULL)
         error(ERR_UNDECLARED_VARIABLE, currentToken->lineNo, currentToken->colNo);
@@ -118,17 +90,11 @@ Object* checkDeclaredVariable(char* name) {
 Object* checkDeclaredFunction(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && obj->kind == OBJ_FUNCTION)
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
 
     if (obj == NULL)
             error(ERR_UNDECLARED_FUNCTION, currentToken->lineNo, currentToken->colNo);
@@ -139,17 +105,11 @@ Object* checkDeclaredFunction(char* name) {
 Object* checkDeclaredProcedure(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && obj->kind == OBJ_PROCEDURE)
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
 
     if (obj == NULL)
             error(ERR_UNDECLARED_PROCEDURE, currentToken->lineNo, currentToken->colNo);
@@ -160,17 +120,11 @@ Object* checkDeclaredProcedure(char* name) {
 Object* checkDeclaredLValueIdent(char* name) {
     Object *obj = NULL;
 
-    // Start search
-    on_search = 0;
-
     do {
         obj = lookupObject(name);
         if (obj != NULL && (obj->kind == OBJ_FUNCTION || obj->kind == OBJ_PARAMETER || obj->kind == OBJ_VARIABLE))
             break;
     } while (obj != NULL);
-
-    // End search
-    on_search = 0;
 
     if (obj == NULL)
             error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);

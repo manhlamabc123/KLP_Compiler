@@ -39,7 +39,6 @@ struct Type_ {
 typedef struct Type_ Type;
 typedef struct Type_ BasicType;
 
-
 struct ConstantValue_ {
   enum TypeClass type;
   union {
