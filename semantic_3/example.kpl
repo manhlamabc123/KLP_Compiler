@@ -1,0 +1,12 @@
+Program Example;
+
+function f(x: integer): integer
+    Begin
+        function g(y: integer): integer
+            Begin
+                f := y * y (* lenh gan cho ten ham khac - khong hop le *)
+            end;
+    end;
+
+Begin
+End.
