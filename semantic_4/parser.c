@@ -67,7 +67,7 @@ void compileBlock(void) {
       constValue = compileConstant();
       
       constObj->constAttrs->value = constValue;
-      declareObject(constObj);
+      declareObject(constObj);  
       
       eat(SB_SEMICOLON);
     } while (lookAhead->tokenType == TK_IDENT);
