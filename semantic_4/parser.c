@@ -561,7 +561,7 @@ void compileArguments(ObjectNode* paramList) {
   case KW_ELSE:
   case KW_THEN:
     // Param list exists but we don't see left parenthesis
-    if (paramList->object != NULL)
+    if (paramList != NULL)
           error(ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
     break;
   default:
