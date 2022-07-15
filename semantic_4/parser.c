@@ -522,6 +522,7 @@ void compileArguments(ObjectNode* paramList) {
   switch (lookAhead->tokenType) {
   case SB_LPAR:
     eat(SB_LPAR);
+    if (paramList == NULL) error(ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
     compileArgument(paramList->object);
 
     while (lookAhead->tokenType == SB_COMMA) {
