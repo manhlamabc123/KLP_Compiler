@@ -12,7 +12,7 @@ Program Example6;
 
    procedure p(v1 : integer);
      const c1 = 'a';
-           c3 = 10;
+           c3 = v1;
      type t1 = integer;
           t2 = array(. 10 .) of t1;
      var v2 : t2;
