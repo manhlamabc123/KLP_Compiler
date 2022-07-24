@@ -1,3 +1,6 @@
 Program Example1; (* Example 1 *)
+var readc: ;
+    c: array(. 2 .) of Integer;
 Begin
+    readc := 1;
 End. (* Example 1 *)

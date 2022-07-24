@@ -8,26 +8,24 @@
 #include <stdlib.h>
 #include "error.h"
 
-void error(ErrorCode err, int lineNo, int colNo, FILE* file) {
+void error(ErrorCode err, int lineNo, int colNo) {
   switch (err) {
   case ERR_ENDOFCOMMENT:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_ENDOFCOMMENT);
+    printf("%d-%d:%s\n", lineNo, colNo, ERM_ENDOFCOMMENT);
     break;
   case ERR_IDENTTOOLONG:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_IDENTTOOLONG);
+    printf("%d-%d:%s\n", lineNo, colNo, ERM_IDENTTOOLONG);
     break;
   case ERR_INVALIDCHARCONSTANT:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_INVALIDCHARCONSTANT);
+    printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDCHARCONSTANT);
     break;
   case ERR_INVALIDSYMBOL:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_INVALIDSYMBOL);
+    printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDSYMBOL);
     break;
   case ERR_NUMBERTOOLONG:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLONG);
-    break;
-  case ERR_NUMBERTOOBIG:
-    fprintf(file, "%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOBIG);
-    break;
+      printf("%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLONG);
+      break;
   }
   exit(-1);
 }
+
