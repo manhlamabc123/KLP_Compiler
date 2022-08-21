@@ -1,3 +1,8 @@
-Program Example1; (* Example 1 *)
-Begin
-End. (* Example 1 *)
+program a;
+    function f(x: integer): integer;
+    begin
+        return x*x;
+    end;
+begin
+    call writei(f(5));
+end.
